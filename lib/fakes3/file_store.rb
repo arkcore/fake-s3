@@ -192,25 +192,6 @@ module FakeS3
 
         File.open(content,'wb') { |f| f << filedata }
 
-<<<<<<< HEAD
-        match= !request.content_type.nil? && request.content_type.match(/^multipart\/form-data; boundary=(.+)/)
-      	boundary = match[1] if match
-        if boundary
-          boundary = WEBrick::HTTPUtils::dequote(boundary)
-          filedata = WEBrick::HTTPUtils::parse_form_data(request.body, boundary)
-          raise HTTPStatus::BadRequest if filedata['file'].empty?
-          File.open(content, 'wb') do |f|
-            f << filedata['file']
-          end
-        else
-          File.open(content,'wb') do |f|
-            request.body do |chunk|
-              f << chunk
-            end
-          end
-        end
-=======
->>>>>>> c359b2c6bade9684340858b327fc8b428d297944
         metadata_struct = create_metadata(content,request)
         File.open(metadata,'w') do |f|
           f << YAML::dump(metadata_struct)
